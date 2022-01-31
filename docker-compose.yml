@@ -7,7 +7,7 @@ services:
     depends_on:
       - postgres
       # - mariadb
-    command: "mix phx.server"
+    command: "bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; mix phx.digest && mix phx.server'"
     environment:
       MIX_ENV: $PROJECT_ENVIRONMENT
       DATABASE_URL: $PROJECT_DATABASE_URL
