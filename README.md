@@ -1,7 +1,7 @@
 # Docker4Phoenix
 ![Docker](https://raw.githubusercontent.com/zvonimirr/docker4phoenix/master/priv/static/images/phoenix.png)
 
-Docker4Phoenix is a Docker stack that deploys Phoenix Framework with PostgreSQL as a database (other options coming soon).
+Docker4Phoenix is a Docker stack that deploys Phoenix Framework with PostgreSQL and/or MariaDB as databases.
 
 To run the stack make sure you first build the Elixir image:
 ```bash

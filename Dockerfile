@@ -11,3 +11,5 @@ COPY . /app
 # Install Mix & rebar3
 RUN mix local.hex --force
 RUN mix local.rebar --force
+# Generate the digest
+RUN mix phx.digest

@@ -1,20 +1,13 @@
 version: '3.3'
 
 services:
-  postgres:
-    container_name: "${PROJECT_NAME}_postgres"
-    image: postgres:$POSTGRES_TAG
-    environment:
-      POSTGRES_USER: $POSTGRES_USER
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      POSTGRES_DB: $POSTGRES_DB
-
   phoenix:
     container_name: "${PROJECT_NAME}_elixir"
     build: .
     depends_on:
       - postgres
-    command: "bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; mix phx.digest && mix phx.server'"
+      # - mariadb
+    command: "mix phx.server"
     environment:
       MIX_ENV: $PROJECT_ENVIRONMENT
       DATABASE_URL: $PROJECT_DATABASE_URL
@@ -24,3 +17,20 @@ services:
       - $PROJECT_PORT:$PROJECT_PORT
     volumes:
       - .:/app
+
+  postgres:
+    container_name: "${PROJECT_NAME}_postgres"
+    image: postgres:$POSTGRES_TAG
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+
+  # mariadb:
+  #   container_name: "${PROJECT_NAME}_mariadb"
+  #   image: mariadb:$MARIADB_TAG
+  #   environment:
+  #     MYSQL_DATABASE: $MARIADB_DB
+  #     MYSQL_USER: $MARIADB_USER
+  #     MYSQL_ROOT_PASSWORD: $MARIADB_PASSWORD
+  #     MYSQL_PASSWORD: $MARIADB_PASSWORD
